@@ -20,4 +20,4 @@ export const DICT = {
     'Goral': 'Горал',
     'Tiger': 'Тигр',
     'Bison': 'Бизон'
-}
+} as Record<string, string>

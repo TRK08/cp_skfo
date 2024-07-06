@@ -1,6 +1,19 @@
 <template>
     <div class="table">
-        <a-table :columns="columns" :dataSource="tableData" bordered size="middle" :loading="isLoading" />
+        <a-table 
+            :columns="columns"
+            :dataSource="tableData"
+            bordered size="middle"
+            :loading="isLoading"
+            :locale="{
+                emptyText: 'Ничего не найдено',
+                filterConfirm: 'Применить',
+                filterReset: 'Сбросить', 
+                triggerDesc: 'Нажмите для сортировки по убыванию',
+                triggerAsc: 'Нажмите для сортировки по возрастанию',
+                cancelSort: 'Нажмите, чтобы отменить сортировку'
+            }"
+        />
     </div>
 </template>
 
@@ -8,7 +21,7 @@
 import { useFilesStore } from '@/store/files';
 import { storeToRefs } from 'pinia';
 
-const {tableData, isLoading} = storeToRefs(useFilesStore())
+const { tableData, isLoading } = storeToRefs(useFilesStore())
 
 
 const columns = [
@@ -110,9 +123,6 @@ const columns = [
         key: 'folder_name'
     },
 ]
-
-
-
 </script>
 
 <style lang="scss"></style>

@@ -13,9 +13,10 @@ import AppUploadInput from '@/components/AppUploadInput.vue'
 import { useFilesStore } from '@/store/files';
 import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
+import { notification } from 'ant-design-vue';
 
 const {uploadFiles} = useFilesStore()
-const {isLoading} = storeToRefs(useFilesStore())
+const {isLoading, error} = storeToRefs(useFilesStore())
 
 
 const files = ref<FileList | null>(null)
@@ -23,19 +24,20 @@ const files = ref<FileList | null>(null)
 
 watch(files, (val) => {
   if (!val) return
-
-  console.log('UPLOAD FOLDER', val)
-
   const folderName = getFolderName(val) || ''
-
   uploadFiles(val, folderName)
 })
 
+watch(error, (val) => {
+  if (!val) return
+  
+  notification.error({
+    message: 'При загрузке данных произошла ошибка',
+  });
+})
+
 const getFolderName = (filesList: FileList) => {
-
   return filesList[0].webkitRelativePath.split('/').shift() 
-
-
 }
 
 </script>
